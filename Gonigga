@@ -66,6 +66,7 @@ class Agenda:
 
     def ver_hoy(selwefwefwefwefwefwefwefwefwefwefwefwefwef):
 
+ 
         hoy = datetime.now().strftime("%d/%m/%Y")
         print(f"\nEVENTOS DE HOY ({hoy})")
         enc = [e for e in self.eventos if e.fecha == hoy]
