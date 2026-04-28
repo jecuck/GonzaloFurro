@@ -37,7 +37,6 @@ class Agenda:
         h = input("Hora (HH:MM): ")
         t = input("Descripción: ")
         self.eventos.append(Evento(f, h, t))
-        print("Evento añadido.")
 
     def listar(self):
         print("\nEVENTOS")
