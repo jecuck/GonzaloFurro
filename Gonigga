@@ -1,0 +1,113 @@
+import os
+from datetime import datetime
+
+
+class Evento:
+    def __init__(self, fechita, horita, textito):
+        self.fecha = fechita
+        self.hora = horita
+        self.texto = textito
+
+    def __str__(self):
+        return f"{self.fecha} | {self.hora} | {self.texto}"
+
+
+class Agenda:
+    def __init__(self):
+        self.eventos = []
+        self.archivo = "Eventos.txt"
+
+    def cargar(self):
+        if os.path.exists(self.archivo) and not self.eventos:
+            with open(self.archivo, "rt", encoding="utf-8") as f:
+                for linea in f:
+                    datos = linea.strip().split(" | ")
+                    if len(datos) == 3:
+                        self.eventos.append(Evento(datos[0], datos[1], datos[2]))
+            print(f"--- {len(self.eventos)} eventos cargados ---")
+
+    def guardar(self):
+        with open(self.archivo, "wt", encoding="utf-8") as f:
+            for e in self.eventos:
+                f.write(f"{e.fecha} | {e.hora} | {e.texto}\n")
+
+    def agregar(self):
+        print("\nNuevo Evento")
+        f = input("Fecha (DD/MM/YYYY): ")
+        h = input("Hora (HH:MM): ")
+        t = input("Descripción: ")
+        self.eventos.append(Evento(f, h, t))
+        print("Evento añadido.")
+
+    def listar(self):
+        print("\nEVENTOS")
+        if not self.eventos:
+            print("Agenda vacía.")
+        for i, e in enumerate(self.eventos, 1):
+            print(f"{i}. {e}")
+
+    def borrar(self):
+        self.listar()
+        try:
+            Borra = int(input("\nID para borrar: ")) - 1
+            if 0 <= Borra < len(self.eventos):
+                self.eventos.pop(Borra)
+                print("Borrado correctamente.")
+        except:
+            print("Error en el ID.")
+
+    def buscar_fecha(self):
+        f = input("\nFecha a buscar (DD/MM/YYYY): ")
+        enc = [e for e in self.eventos if e.fecha == f]
+        if enc:
+            for e in enc: print(e)
+        else:
+            print("No hay nada para esa fecha.")
+
+    def ver_hoy(self):
+        hoy = datetime.now().strftime("%d/%m/%Y")
+        print(f"\nEVENTOS DE HOY ({hoy})")
+        enc = [e for e in self.eventos if e.fecha == hoy]
+        if enc:
+            for e in enc: print(e)
+        else:
+            print("Hoy está libre.")
+
+
+def menu(agenda):
+    print("\nMenu")
+    print("1. Agregar evento")
+    print("2. Borrar evento")
+    print("3. Listar todos")
+    print("4. Ver los de hoy")
+    print("5. Buscar por fecha")
+    print("6. Salir y Guardar")
+    
+    opc = input("\nOpción: ")
+
+    if opc == "1":
+        agenda.agregar()
+        menu(agenda)
+    elif opc == "2":
+        agenda.borrar()
+        menu(agenda)
+    elif opc == "3":
+        agenda.listar()
+        menu(agenda)
+    elif opc == "4":
+        agenda.ver_hoy()
+        menu(agenda)
+    elif opc == "5":
+        agenda.buscar_fecha()
+        menu(agenda)
+    elif opc == "6":
+        agenda.guardar()
+        print("Datos guardados. Chao pescao")
+    else:
+        print("Has cometido un error, vuelve a introducir opcion.")
+        menu(agenda)
+
+
+mi_agenda = Agenda()
+mi_agenda.cargar()
+menu(mi_agenda)
