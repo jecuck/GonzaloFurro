@@ -37,46 +37,7 @@ class Agenda:
         h = input("Hora (HH:MM): ")
         t = input("Descripción: ")
         self.eventos.append(Evento(f, h, t))
-        print("Evento añadido.")
 
-    def listar(self):
-        print("\nEVENTOS")
-        if not self.eventos:
-            print("Agenda vacía.")
-        for i, e in enumerate(self.eventos, 1):
-            print(f"{i}. {e}")
-
-    def borrar(self):
-        self.listar()
-        try:
-            Borra = int(input("\nID para borrar: ")) - 1
-            if 0 <= Borra < len(self.eventos):
-                self.eventos.pop(Borra)
-                print("Borrado correctamente.")
-        except:
-            print("Error en el ID.")
-
-    def buscar_fecha(self):
-        f = input("\nFecha a buscar (DD/MM/YYYY): ")
-        enc = [e for e in self.eventos if e.fecha == f]
-        if enc:
-            for e in enc: print(e)
-        else:
-            print("No hay nada para esa fecha.")
-
-    def ver_hoy(selwefwefwefwefwefwefwefwefwefwefwefwefwef):
-        hoy = datetime.now().strftime("%d/%m/%Y")
-        print(f"\nEVENTOS DE HOY ({hoy})")
-        enc = [e for e in self.eventos if e.fecha == hoy]
-        if enc:
-            for e in enc: print(e)
-        else:
-            print("Hoy está libre.")
-
-
-def menu(agenda):
-    print("\nMenu")
-    print("1. Agregar evento")
     print("2. Borrar evento")
     print("3. Listar todos")
     print("4. Ver los de hoy")
